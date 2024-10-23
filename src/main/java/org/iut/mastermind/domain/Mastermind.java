@@ -24,20 +24,23 @@ public class Mastermind{
     // sinon on utilise le service de tirage aléatoire pour obtenir un mot
     // et on initialise une nouvelle partie et on la stocke
     public boolean nouvellePartie(Joueur joueur) {
-        Optional<Partie> partie = this.partieRepository.getPartieEnregistree(joueur);
-        if(!partie.isPresent()){
-            this.partieRepository.create(Partie.create(joueur, this.serviceTirageMot.tirageMotAleatoire()));
-            return true;
-        }
-        return false;
+        return this.partieRepository.getPartieEnregistree(joueur)
+                .map(partie -> false)
+                .orElseGet(() -> {
+                    this.partieRepository.create(Partie.create(joueur, this.serviceTirageMot.tirageMotAleatoire()));
+                    return true;
+                });
     }
 
     // on récupère éventuellement la partie enregistrée pour le joueur
     // si la partie n'est pas une partie en cours, on renvoie une erreur
     // sinon on retourne le resultat du mot proposé
+
     public ResultatPartie evaluation(Joueur joueur, String motPropose) {
-        Optional<Partie> partie = this.partieRepository.getPartieEnregistree(joueur);
-        return !isJeuEnCours(partie) ? ResultatPartie.ERROR : calculeResultat(partie.get(), motPropose);
+        return this.partieRepository.getPartieEnregistree(joueur)
+                .filter(this::isJeuEnCours)
+                .map(partie -> calculeResultat(partie, motPropose))
+                .orElse(ResultatPartie.ERROR);
     }
 
     // on évalue le résultat du mot proposé pour le tour de jeu
@@ -46,17 +49,12 @@ public class Mastermind{
     private ResultatPartie calculeResultat(Partie partie, String motPropose) {
         Reponse reponse = partie.tourDeJeu(motPropose);
         this.partieRepository.update(partie);
-        return  ResultatPartie.create(reponse, partie.isTerminee());
+        return ResultatPartie.create(reponse, partie.isTerminee());
     }
 
     // si la partie en cours est vide, on renvoie false
     // sinon, on évalue si la partie est terminée
-    private boolean isJeuEnCours(Optional<Partie> partieEnCours) {
-        if(!partieEnCours.isPresent()){
-            return false;
-        } else if (partieEnCours.get().isTerminee()) {
-            return false;
-        }
-        return true;
+    private boolean isJeuEnCours(Partie partie) {
+        return !partie.isTerminee();
     }
 }

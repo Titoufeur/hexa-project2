@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="Test nouvelle partie:" tests="2" skipped="0" failures="0" errors="0" timestamp="2024-10-14T17:59:50" hostname="DESKTOP-76CE7TH" time="0.933">
+<testsuite name="Test nouvelle partie:" tests="2" skipped="0" failures="0" errors="0" timestamp="2024-10-23T16:06:48" hostname="DESKTOP-76CE7TH" time="1.115">
   <properties/>
-  <testcase name="ne peut pas redÃ©marrer" classname="org.iut.mastermind.domain.partie.TestNouvellePartie" time="0.915"/>
-  <testcase name="est correctement initialisÃ©e" classname="org.iut.mastermind.domain.partie.TestNouvellePartie" time="0.017"/>
+  <testcase name="ne peut pas redÃ©marrer" classname="org.iut.mastermind.domain.partie.TestNouvellePartie" time="1.095"/>
+  <testcase name="est correctement initialisÃ©e" classname="org.iut.mastermind.domain.partie.TestNouvellePartie" time="0.018"/>
   <system-out><![CDATA[Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build what is described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html#0.3
 Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build what is described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html#0.3
 ]]></system-out>

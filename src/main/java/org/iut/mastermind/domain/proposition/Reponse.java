@@ -22,19 +22,15 @@ public class Reponse {
     // du mot proposé
     public void compare(String essai) {
         resultat.clear();
-        for (int i = 0; i < essai.toCharArray().length; i++) {
-            this.position = i;
-            resultat.add(evaluationCaractere(essai.toCharArray()[i]));
-        }
+        essai.chars().forEach(c -> {
+            this.position = essai.indexOf(c);
+            resultat.add(evaluationCaractere((char) c));
+        });
     }
 
     // si toutes les lettres sont placées
     public boolean lettresToutesPlacees() {
-        boolean res = true;
-        for (Lettre lettre : resultat) {
-            if (lettre != Lettre.PLACEE) res = false;
-        }
-        return res;
+        return resultat.stream().allMatch(lettre -> lettre == Lettre.PLACEE);
     }
 
     public List<Lettre> lettresResultat() {
